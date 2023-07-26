@@ -12,7 +12,7 @@ export const Home: React.FC = () => {
 
   const checkText = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
-    console.log(input);
+
     setInput(text);
 
     try {

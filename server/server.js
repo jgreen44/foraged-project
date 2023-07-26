@@ -11,11 +11,20 @@ app.get("/", (req, res) => {
   res.send("Hello Foraged World!");
 });
 app.post("/check-text", (req, res) => {
-  console.log("req body", req.body.text);
-  let input = req.body.text;
+  try {
+    let input = req.body.text;
 
-  const result = computeLongestStreak(input);
-  return res.json(result);
+    const result = computeLongestStreak(input);
+    return res.json(result);
+  } catch (error) {
+    console.error(`Error: ${error}`);
+    if (error.response && error.response.status === 404) {
+      return res.status(404).json({
+        error: `Server Error: ${error.response}`,
+      });
+    }
+    res.status(500).json({ error: error.toString() });
+  }
 });
 
 app.listen(PORT, (err) => {
